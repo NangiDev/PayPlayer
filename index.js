@@ -58,9 +58,7 @@ setInterval(updateCurrentDate, 1000);
 const play = document.getElementById('play');
 const container = document.documentElement;
 
-play.addEventListener('click', function (event) {
-    const { clientX, clientY } = event.touches ? event.touches[0] : event;
-
+function createParticles(clientX, clientY) {
     for (let i = 0; i < 20 + Math.random() * 20; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
@@ -70,6 +68,7 @@ play.addEventListener('click', function (event) {
         const distance = Math.random() * 40;
         const scale = Math.random() * 2;
         const duration = 500 + Math.random() * 500;
+        const rotation = Math.random() * 360; // random rotation angle
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
 
@@ -78,8 +77,8 @@ play.addEventListener('click', function (event) {
 
         const animation = particle.animate(
             [
-                { transform: 'translate(0, 0) scale(0)', opacity: 1 },
-                { transform: `translate(${x}px, ${y}px) scale(${scale})`, opacity: 0 }
+                { transform: 'translate(0, 0) scale(0) rotate(0deg)', opacity: 1 },
+                { transform: `translate(${x}px, ${y}px) scale(${scale}) rotate(${rotation}deg)`, opacity: 0 }
             ],
             {
                 duration: duration,
@@ -89,4 +88,14 @@ play.addEventListener('click', function (event) {
 
         animation.onfinish = () => particle.remove();
     }
+}
+
+play.addEventListener('click', function (event) {
+    const { clientX, clientY } = event;
+    createParticles(clientX, clientY);
+});
+
+play.addEventListener('touchstart', function (event) {
+    const { clientX, clientY } = event.touches[0];
+    createParticles(clientX, clientY);
 });
