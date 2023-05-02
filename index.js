@@ -1,4 +1,24 @@
 /***************
+*     CLOSE    *
+****************/
+
+var myDiv = document.getElementById("close-button");
+myDiv.addEventListener("click", function () {
+    window.close();
+});
+
+
+/***************
+*     SOUND    *
+****************/
+
+function playSound() {
+    var audio = new Audio('sound/sound.mp3');
+    audio.play();
+}
+
+
+/***************
 *     TIMER    *
 ****************/
 

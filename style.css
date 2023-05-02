@@ -5,6 +5,8 @@
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
     color: white;
+    pointer-events: none;
+    user-select: none;
     /* background-color: red */
 }
 
@@ -24,6 +26,8 @@ body {
 #sweet {
     color: white;
     position: absolute;
+    pointer-events: none;
+    user-select: none;
 }
 
 #sweet h1 {
@@ -52,7 +56,7 @@ body {
 }
 
 .fa-circle-xmark {
-    opacity: 0.7;
+    opacity: 0.6;
     font-size: 6vh;
 }
 
@@ -78,7 +82,7 @@ body {
 
 
 .square {
-    /* border: solid green; */
+    /* border: solid purple; */
     border-width: thin;
 }
 
@@ -182,6 +186,15 @@ hr {
     position: absolute;
     bottom: 3vh;
     right: 5vh;
+}
+
+#close-button {
+    pointer-events: all;
+    user-select: all;
+}
+
+#close-button:hover {
+    opacity: 1.0;
 }
 
 /* 
