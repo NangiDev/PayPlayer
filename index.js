@@ -3,9 +3,12 @@
 ****************/
 
 var myDiv = document.getElementById("close-button");
-myDiv.addEventListener("click", function () {
+myDiv.addEventListener("click", closeWindow);
+myDiv.addEventListener("touchstart", closeWindow);
+
+function closeWindow() {
     window.close();
-});
+}
 
 
 /***************
