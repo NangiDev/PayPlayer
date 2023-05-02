@@ -60,6 +60,24 @@ body {
     font-size: 6vh;
 }
 
+#logo {
+    width: 100%;
+    display: inline-block;
+    font-size: 1.4vh;
+    font-weight: bold;
+}
+
+.fa-guitar {
+    margin-top: 3vh;
+    opacity: 0.8;
+    font-size: 2vh;
+    background: cyan;
+    background: -webkit-linear-gradient(#00f7ff, #ffae00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 #play {
     position: absolute;
     background-color: green;
