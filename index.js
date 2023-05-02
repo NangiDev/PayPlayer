@@ -7,11 +7,10 @@ gridButton.addEventListener("click", toggleGrid);
 gridButton.addEventListener("touchstart", toggleGrid);
 
 function toggleGrid() {
-    squares = document.getElementsByClassName("square");
-    Array.prototype.forEach.call(squares, function (square) {
 
-        // Do stuff here
-        console.log(square);
+    squares = document.getElementsByClassName("square-no-border");
+    Array.prototype.forEach.call(squares, function (square) {
+        square.classList.toggle("square-border");
     });
 }
 

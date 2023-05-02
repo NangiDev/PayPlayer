@@ -108,9 +108,16 @@ body {
 }
 
 
-.square {
-    /* border: solid purple; */
-    border-width: thin;
+.square {}
+
+.square-no-border {
+    border: dashed transparent;
+    border-width: 0.2vh;
+}
+
+.square-border {
+    border: dashed purple;
+    border-width: 0.2vh;
 }
 
 #info {
