@@ -7,7 +7,7 @@ myDiv.addEventListener("click", closeWindow);
 myDiv.addEventListener("touchstart", closeWindow);
 
 function closeWindow() {
-    window.close();
+    //TODO: Implement fireworks in play area when pressing the "close button"
 }
 
 

@@ -61,6 +61,7 @@ body {
 }
 
 #logo {
+    margin-top: 3vh;
     width: 100%;
     display: inline-block;
     font-size: 1.4vh;
@@ -68,14 +69,15 @@ body {
 }
 
 .fa-guitar {
-    margin-top: 3vh;
     opacity: 0.8;
     font-size: 2vh;
     background: cyan;
-    background: -webkit-linear-gradient(#00f7ff, #ffae00);
+    background: linear-gradient(#00f7ff, #ffae00);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
 }
 
 #play {
