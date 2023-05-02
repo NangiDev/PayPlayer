@@ -1,13 +1,18 @@
 /***************
-*     CLOSE    *
+*     GRID     *
 ****************/
 
-var myDiv = document.getElementById("close-button");
-myDiv.addEventListener("click", closeWindow);
-myDiv.addEventListener("touchstart", closeWindow);
+var gridButton = document.getElementById("grid-button");
+gridButton.addEventListener("click", toggleGrid);
+gridButton.addEventListener("touchstart", toggleGrid);
 
-function closeWindow() {
-    //TODO: Implement fireworks in play area when pressing the "close button"
+function toggleGrid() {
+    squares = document.getElementsByClassName("square");
+    Array.prototype.forEach.call(squares, function (square) {
+
+        // Do stuff here
+        console.log(square);
+    });
 }
 
 
@@ -74,6 +79,7 @@ function createParticles(clientX, clientY) {
 
         particle.style.left = clientX + x + 'px';
         particle.style.top = clientY + y + 'px';
+        particle.style.zIndex = '9999';
 
         const animation = particle.animate(
             [
@@ -96,6 +102,8 @@ play.addEventListener('click', function (event) {
 });
 
 play.addEventListener('touchstart', function (event) {
-    const { clientX, clientY } = event.touches[0];
-    createParticles(clientX, clientY);
+    Array.prototype.forEach.call(event.touches, function (event) {
+        const { clientX, clientY } = event;
+        createParticles(clientX, clientY);
+    });
 });

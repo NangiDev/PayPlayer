@@ -60,6 +60,11 @@ body {
     font-size: 6vh;
 }
 
+.fa-border-all {
+    opacity: 0.6;
+    font-size: 6vh;
+}
+
 #logo {
     margin-top: 3vh;
     width: 100%;
@@ -82,7 +87,7 @@ body {
 
 #play {
     pointer-events: all;
-    user-select: all;
+    user-select: none;
     position: absolute;
     background-color: green;
     /* background: rgb(174, 233, 72);
@@ -216,6 +221,15 @@ hr {
 }
 
 #close-button:hover {
+    opacity: 1.0;
+}
+
+#grid-button {
+    pointer-events: all;
+    user-select: all;
+}
+
+#grid-button:hover {
     opacity: 1.0;
 }
 
