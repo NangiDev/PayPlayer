@@ -26,7 +26,7 @@ Array.prototype.forEach.call(squares, function (square, index) {
 });
 
 function playSound(event) {
-    event.preventDefault;
+    event.preventDefault();
     let sound = event.currentTarget.soundPath;
     let path = `sound/${sound}.mp3`;
     var audio = new Audio(path);
