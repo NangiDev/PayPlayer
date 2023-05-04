@@ -3,7 +3,7 @@
 ****************/
 
 var gridButton = document.getElementById("grid-button");
-gridButton.addEventListener("click", toggleGrid);
+gridButton.addEventListener("mousedown", toggleGrid);
 gridButton.addEventListener("touchstart", toggleGrid, { once: true });
 
 function toggleGrid(event) {
@@ -40,7 +40,7 @@ sounds[8].preload = 'auto';
 squares = document.getElementsByClassName("square");
 Array.prototype.forEach.call(squares, function (square, index) {
     square.soundPath = sounds[index];
-    square.addEventListener("click", playSound);
+    square.addEventListener("mousedown", playSound);
     square.addEventListener("touchstart", playSound, { once: true });
 });
 
@@ -122,7 +122,7 @@ function createParticles(clientX, clientY) {
     }
 }
 
-play.addEventListener('click', function (event) {
+play.addEventListener('mousedown', function (event) {
     const { clientX, clientY } = event;
     createParticles(clientX, clientY);
 });
@@ -131,5 +131,5 @@ play.addEventListener('touchstart', function (event) {
     Array.prototype.forEach.call(event.touches, function (event) {
         const { clientX, clientY } = event;
         createParticles(clientX, clientY);
-    });
+    }, { once: true });
 });
