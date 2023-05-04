@@ -14,12 +14,20 @@ function toggleGrid(event) {
     });
 }
 
-
 /***************
 *     SOUND    *
 ****************/
 
-function playSound(sound) {
+squares = document.getElementsByClassName("square");
+Array.prototype.forEach.call(squares, function (square, index) {
+    square.soundPath = `sound${index + 1}`;
+    square.addEventListener("click", playSound);
+    square.addEventListener("touchstart", playSound, { once: true });
+});
+
+function playSound(event) {
+    event.preventDefault;
+    let sound = event.currentTarget.soundPath;
     let path = `sound/${sound}.mp3`;
     var audio = new Audio(path);
     audio.play();
