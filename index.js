@@ -19,8 +19,9 @@ function toggleGrid() {
 *     SOUND    *
 ****************/
 
-function playSound() {
-    var audio = new Audio('sound/sound.mp3');
+function playSound(sound) {
+    let path = `sound/${sound}.mp3`;
+    var audio = new Audio(path);
     audio.play();
 }
 

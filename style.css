@@ -108,7 +108,10 @@ body {
 }
 
 
-.square {}
+.square {
+    pointer-events: all;
+    user-select: none;
+}
 
 .square-no-border {
     border: dashed transparent;
