@@ -1,3 +1,7 @@
+# DISCLAIMER
+This project is only for fun, don't use for illegal activities!
+Play some tunes and enjoy!
+
 # PayPlayer
 Toy project designed after a payment service, but for playing some simple melodies
 
