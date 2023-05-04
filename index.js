@@ -4,10 +4,9 @@
 
 var gridButton = document.getElementById("grid-button");
 gridButton.addEventListener("click", toggleGrid);
-gridButton.addEventListener("touchstart", toggleGrid);
+gridButton.addEventListener("touchend", toggleGrid);
 
 function toggleGrid() {
-
     squares = document.getElementsByClassName("square-no-border");
     Array.prototype.forEach.call(squares, function (square) {
         square.classList.toggle("square-border");
