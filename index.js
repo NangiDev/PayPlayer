@@ -3,7 +3,7 @@
 ****************/
 
 var gridButton = document.getElementById("grid-button");
-// gridButton.addEventListener("mousedown", toggleGrid);
+gridButton.addEventListener("mousedown", toggleGrid);
 gridButton.addEventListener("touchstart", toggleGrid/* , { once: true } */);
 
 function toggleGrid(event) {
