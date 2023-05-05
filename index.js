@@ -17,38 +17,35 @@ function toggleGrid(event) {
 /***************
 *     SOUND    *
 ****************/
-sounds = []
-sounds[0] = new Audio('sound/sound1.mp3');
-sounds[0].preload = 'auto';
-sounds[1] = new Audio('sound/sound2.mp3');
-sounds[1].preload = 'auto';
-sounds[2] = new Audio('sound/sound3.mp3');
-sounds[2].preload = 'auto';
-sounds[3] = new Audio('sound/sound4.mp3');
-sounds[3].preload = 'auto';
-sounds[4] = new Audio('sound/sound5.mp3');
-sounds[4].preload = 'auto';
-sounds[5] = new Audio('sound/sound6.mp3');
-sounds[5].preload = 'auto';
-sounds[6] = new Audio('sound/sound7.mp3');
-sounds[6].preload = 'auto';
-sounds[7] = new Audio('sound/sound8.mp3');
-sounds[7].preload = 'auto';
-sounds[8] = new Audio('sound/sound9.mp3');
-sounds[8].preload = 'auto';
+
+soundInstances = []; // Pooling up to 3 sound instances for each sound
+for (let _id = 0; _id < 9; _id++) {
+    let sound = new Audio(`sound/sound${_id + 1}.mp3`);
+    sound.preload = 'auto';
+    soundInstances.push({
+        id: _id,
+        pool_i: 0,
+        pool: [sound, sound.cloneNode(), sound.cloneNode()]
+    });
+}
 
 squares = document.getElementsByClassName("square");
 Array.prototype.forEach.call(squares, function (square, index) {
-    square.soundPath = sounds[index];
+    square.soundInstance = soundInstances[index];
     square.addEventListener("mousedown", playSound);
     square.addEventListener("touchstart", playSound/*, { once: true } */);
 });
 
 function playSound(event) {
     event.preventDefault();
-    let audio = event.currentTarget.soundPath;
+    let soundInstance = event.currentTarget.soundInstance;
+    let audio = soundInstance.pool[soundInstance.pool_i];
     audio.currentTime = 0;
     audio.play();
+    soundInstance.pool_i++;
+    if (soundInstance.pool_i >= 3) {
+        soundInstance.pool_i = 0
+    }
 }
 
 
