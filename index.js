@@ -20,7 +20,7 @@ function toggleGrid(event) {
 
 soundInstances = []; // Pooling up to 3 sound instances for each sound
 for (let _id = 0; _id < 9; _id++) {
-    let sound = new Audio(`sound/sound${_id + 1}.mp3`);
+    let sound = new Audio(`sound/sound${_id}.mp3`);
     sound.preload = 'auto';
     soundInstances.push({
         id: _id,
@@ -55,7 +55,7 @@ function playSound(event) {
 
     // update the output element with the time elapsed
     var outputElement = document.getElementById('output');
-    outputElement.textContent = 'Delay on sound: ' + timeElapsed + 'ms';
+    outputElement.textContent = `Delay on sound: ${timeElapsed.toFixed(3)} ms`;
 }
 
 
