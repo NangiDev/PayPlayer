@@ -36,7 +36,11 @@ Array.prototype.forEach.call(squares, function (square, index) {
     square.addEventListener("touchstart", playSound/*, { once: true } */);
 });
 
+let startTime = 0;
+let endTime = 0;
+let timeElapsed = 0;
 function playSound(event) {
+    startTime = performance.now();
     event.preventDefault();
     let soundInstance = event.currentTarget.soundInstance;
     let audio = soundInstance.pool[soundInstance.pool_i];
@@ -46,6 +50,12 @@ function playSound(event) {
     if (soundInstance.pool_i >= 3) {
         soundInstance.pool_i = 0
     }
+    endTime = performance.now();
+    timeElapsed = endTime - startTime;
+
+    // update the output element with the time elapsed
+    var outputElement = document.getElementById('output');
+    outputElement.textContent = 'Delay on sound: ' + timeElapsed + 'ms';
 }
 
 
