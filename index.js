@@ -79,6 +79,66 @@ function playSound(event) {
     outputElement.textContent = `Delay on sound: ${timeElapsed.toFixed(3)} ms`;
 }
 
+/***************
+* PLAY-A-LONG  *
+****************/
+
+var logoButton = document.getElementById("logo");
+logoButton.addEventListener("mousedown", playALong);
+logoButton.addEventListener("touchstart", playALong/* , { once: true } */);
+
+let functions = [];
+let shouldPlay = false;
+const playArea = document.getElementById("play").getBoundingClientRect();
+
+function createNote(song, index) {
+    return function () {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                if (shouldPlay) {
+                    if (song >= 0) {
+                        playSoundByIndex(song);
+                        createParticles(
+                            playArea.x + (playArea.width / 6) + (playArea.width / 3) * (song % 3), //Particle X
+                            playArea.y + (playArea.height / 6 + (playArea.height / 3) * Math.floor((song / 3))) //Particle Y
+                        );
+                    }
+                    if (index === functions.length - 1) { shouldPlay = false; }
+                    resolve();
+                } else {
+                    reject("Sequence cancelled");
+                }
+            }, 300);
+        });
+    }
+}
+
+function playALong(event) {
+    event.preventDefault();
+    shouldPlay = !shouldPlay;
+    if (shouldPlay) {
+        let twinkleLittleStar =
+            [
+                0, 0, 1, 1, 2, 2, 1, -1,
+                7, 7, 4, 4, 6, 6, 0, -1,
+                1, 1, 7, 7, 4, 4, 6, -1,
+                1, 1, 7, 7, 4, 4, 6, -1,
+                0, 0, 1, 1, 2, 2, 1, -1,
+                7, 7, 4, 4, 6, 6, 0, -1
+            ]
+
+        twinkleLittleStar.map((song, index) => {
+            functions[index] = createNote(song, index)
+        });
+
+        functions.reduce(function (promiseChain, currentFunction, index) {
+            return promiseChain.then(currentFunction);
+        }, Promise.resolve())
+            .catch(function (error) {
+                console.log("Error:", error);
+            });
+    }
+}
 
 /***************
 *     TIMER    *

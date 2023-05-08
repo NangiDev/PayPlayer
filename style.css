@@ -71,6 +71,8 @@ body {
     display: inline-block;
     font-size: 1.4vh;
     font-weight: bold;
+    pointer-events: all;
+    /* user-select: all; */
 }
 
 .fa-guitar {
