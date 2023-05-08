@@ -21,20 +21,33 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const buffers = []; // An array of pre-loaded audio buffers
 const filepaths = ["sound/sound0.mp3", "sound/sound1.mp3", "sound/sound2.mp3", "sound/sound3.mp3", "sound/sound4.mp3", "sound/sound5.mp3", "sound/sound6.mp3", "sound/sound7.mp3", "sound/sound8.mp3"];
 
-// Iterate over the filepaths array and load each audio file as an array buffer
-for (let i = 0; i < filepaths.length; i++) {
-    const request = new XMLHttpRequest();
-    request.open('GET', filepaths[i], true);
-    request.responseType = 'arraybuffer';
+// Create an array of promises that will load and decode each audio file
+const promises = filepaths.map((filepath, index) => {
+    return new Promise(function (resolve, reject) {
+        const request = new XMLHttpRequest();
+        request.open('GET', filepath, true);
+        request.responseType = 'arraybuffer';
 
-    request.onload = function () {
-        audioContext.decodeAudioData(request.response, function (buffer) {
-            buffers[i] = buffer;
-        });
-    };
+        request.onload = function () {
+            audioContext.decodeAudioData(request.response, function (buffer) {
+                buffers[index] = buffer;
+                resolve();
+            });
+        };
 
-    request.send();
-}
+        request.onerror = function () {
+            reject(new Error('Error loading audio file: ' + filepath));
+        };
+
+        request.send();
+    });
+});
+
+Promise.all(promises).then(function () {
+    console.log("All sounds have been loaded")
+}).catch(function (error) {
+    console.error(error);
+});
 
 function playSoundByIndex(index) {
     const source = audioContext.createBufferSource();
