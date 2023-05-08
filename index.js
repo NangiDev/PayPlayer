@@ -17,21 +17,35 @@ function toggleGrid(event) {
 /***************
 *     SOUND    *
 ****************/
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const buffers = []; // An array of pre-loaded audio buffers
+const filepaths = ["sound/sound0.mp3", "sound/sound1.mp3", "sound/sound2.mp3", "sound/sound3.mp3", "sound/sound4.mp3", "sound/sound5.mp3", "sound/sound6.mp3", "sound/sound7.mp3", "sound/sound8.mp3"];
 
-soundInstances = []; // Pooling up to 3 sound instances for each sound
-for (let _id = 0; _id < 9; _id++) {
-    let sound = new Audio(`sound/sound${_id}.mp3`);
-    sound.preload = 'auto';
-    soundInstances.push({
-        id: _id,
-        pool_i: 0,
-        pool: [sound, sound.cloneNode(), sound.cloneNode()]
-    });
+// Iterate over the filepaths array and load each audio file as an array buffer
+for (let i = 0; i < filepaths.length; i++) {
+    const request = new XMLHttpRequest();
+    request.open('GET', filepaths[i], true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function () {
+        audioContext.decodeAudioData(request.response, function (buffer) {
+            buffers[i] = buffer;
+        });
+    };
+
+    request.send();
+}
+
+function playSoundByIndex(index) {
+    const source = audioContext.createBufferSource();
+    source.buffer = buffers[index];
+    source.connect(audioContext.destination);
+    source.start(0);
 }
 
 squares = document.getElementsByClassName("square");
 Array.prototype.forEach.call(squares, function (square, index) {
-    square.soundInstance = soundInstances[index];
+    square.soundIndex = index;
     square.addEventListener("mousedown", playSound);
     square.addEventListener("touchstart", playSound/*, { once: true } */);
 });
@@ -40,16 +54,10 @@ let startTime = 0;
 let endTime = 0;
 let timeElapsed = 0;
 function playSound(event) {
-    startTime = performance.now();
     event.preventDefault();
-    let soundInstance = event.currentTarget.soundInstance;
-    let audio = soundInstance.pool[soundInstance.pool_i];
-    audio.currentTime = 0;
-    audio.play();
-    soundInstance.pool_i++;
-    if (soundInstance.pool_i >= 3) {
-        soundInstance.pool_i = 0
-    }
+
+    startTime = performance.now();
+    playSoundByIndex(event.currentTarget.soundIndex);
     endTime = performance.now();
     timeElapsed = endTime - startTime;
 
