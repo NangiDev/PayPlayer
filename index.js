@@ -19,7 +19,7 @@ function toggleGrid(event) {
 ****************/
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const buffers = []; // An array of pre-loaded audio buffers
-const filepaths = ["sound/sound0.mp3", "sound/sound1.mp3", "sound/sound2.mp3", "sound/sound3.mp3", "sound/sound4.mp3", "sound/sound5.mp3", "sound/sound6.mp3", "sound/sound7.mp3", "sound/sound8.mp3"];
+const filepaths = ["sounds/sound0.mp3", "sounds/sound1.mp3", "sounds/sound2.mp3", "sounds/sound3.mp3", "sounds/sound4.mp3", "sounds/sound5.mp3", "sounds/sound6.mp3", "sounds/sound7.mp3", "sounds/sound8.mp3"];
 
 // Create an array of promises that will load and decode each audio file
 const promises = filepaths.map((filepath, index) => {
@@ -83,9 +83,9 @@ function playSound(event) {
 * PLAY-A-LONG  *
 ****************/
 
-var logoButton = document.getElementById("logo");
-logoButton.addEventListener("mousedown", playALong);
-logoButton.addEventListener("touchstart", playALong/* , { once: true } */);
+var playButton = document.getElementById("play-song");
+playButton.addEventListener("mousedown", playALong);
+playButton.addEventListener("touchstart", playALong/* , { once: true } */);
 
 let functions = [];
 let shouldPlay = false;
@@ -108,7 +108,7 @@ function createNote(song, index) {
                 } else {
                     reject("Sequence cancelled");
                 }
-            }, 300);
+            }, 400);
         });
     }
 }
@@ -221,3 +221,35 @@ play.addEventListener('touchstart', function (event) {
         createParticles(clientX, clientY);
     } /*, { once: true } */);
 });
+
+/***************
+*   SONG LIST  *
+****************/
+
+var dropdown = document.getElementById("songs-dropdown");
+
+fetch("songs/")
+    .then(response => response.text())
+    .then(html => {
+        // Parse the returned HTML to extract the list of .txt files
+        var fileList = [];
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, "text/html");
+        var links = doc.querySelectorAll("a");
+        for (var i = 0; i < links.length; i++) {
+            var href = links[i].getAttribute("href");
+            if (href.includes(".txt")) {
+                fileList.push(href);
+            }
+        }
+
+        // Create an option for each file in the dropdown menu
+        for (var i = 0; i < fileList.length; i++) {
+            var filename = fileList[i];
+            var option = document.createElement("option");
+            option.value = filename;
+            option.text = filename.split("/").pop().replace(".txt", "").replace(".preview", "").replaceAll("_", " ");
+            dropdown.add(option);
+        }
+    })
+    .catch(error => console.error(error));

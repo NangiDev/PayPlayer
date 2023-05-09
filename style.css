@@ -7,7 +7,6 @@
     color: white;
     pointer-events: none;
     user-select: none;
-    /* background-color: red */
 }
 
 html {
@@ -39,7 +38,6 @@ body {
 
 #sweet i {
     position: absolute;
-    /* background-color: red; */
     width: 48vh;
     text-align: center;
 }
@@ -72,7 +70,6 @@ body {
     font-size: 1.4vh;
     font-weight: bold;
     pointer-events: all;
-    /* user-select: all; */
 }
 
 .fa-guitar {
@@ -92,8 +89,6 @@ body {
     user-select: none;
     position: absolute;
     background-color: green;
-    /* background: rgb(174, 233, 72);
-    background: linear-gradient(155deg, rgba(174, 233, 72, 1) 0%, rgba(63, 171, 20, 1) 35%, rgba(11, 106, 43, 1) 100%); */
     background: rgb(172, 110, 184);
     background: linear-gradient(155deg, rgba(172, 110, 184, 1) 0%, rgba(137, 81, 172, 1) 35%, rgba(17, 8, 89, 1) 100%);
     height: 40%;
@@ -104,9 +99,6 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     z-index: 2;
-    /* clip-path: circle(300.0% at 50% -240%);
-    -webkit-clip-path: circle(300.0% at 50% -240%);
-    -moz-clip-path: circle(300.0% at 50% -240%); */
 }
 
 
@@ -127,7 +119,6 @@ body {
 
 #info {
     position: absolute;
-    /* background-color: white; */
     background-color: rgb(17, 17, 17);
     height: 65%;
     width: 48vh;
@@ -143,12 +134,9 @@ body {
     position: absolute;
     top: -39vh;
     left: -30vh;
-    /*right: 25%; */
     height: 50vh;
     width: 110vh;
     background-color: green;
-    /* background: rgb(174, 233, 72);
-    background: linear-gradient(155deg, rgb(54, 148, 16) 55%, rgba(11, 106, 43, 1) 83%); */
     background: rgb(172, 110, 184);
     background: linear-gradient(155deg, rgb(101, 54, 161) 54%, rgba(17, 8, 89, 1) 81%);
     border-radius: 50%;
@@ -158,7 +146,7 @@ hr {
     color: transparent;
     background-color: white;
     position: absolute;
-    opacity: 0.2;
+    opacity: 0.1;
     margin-top: 1vh;
     left: 1.5vh;
     height: 0.3vh;
@@ -166,7 +154,6 @@ hr {
 }
 
 #info h3 {
-    /* background-color: red; */
     font-size: 2.5vh;
     margin: 0;
     margin-top: 1.2vh;
@@ -174,7 +161,6 @@ hr {
 }
 
 #info h2 {
-    /* background-color: red; */
     font-size: 3.5vh;
     margin: 0;
     margin-top: 2vh;
@@ -182,7 +168,6 @@ hr {
 }
 
 #info h6 {
-    /* background-color: red; */
     font-size: 1.6vh;
     margin: 0;
     padding: 0;
@@ -198,42 +183,48 @@ hr {
     font-size: 1.6vh;
 }
 
-/* .horizontal-text h6 {
-    display: inline-block;
-    width: 22vh;
-} */
-
 .horizontal-text {
     margin-top: 1vh;
     position: relative;
     width: 100%;
 }
 
+.horizontal-text button {
+    pointer-events: all;
+    text-align: center;
+    font-size: 2vh;
+    color: white;
+    opacity: 0.7;
+    background-color: rgb(195, 23, 218);
+    width: 20vh;
+    height: 6vh;
+    border-radius: 1vh;
+    margin-top: 1.1vh;
+    margin-left: 1vh;
+    margin-right: 1vh;
+}
+
+.horizontal-text button:hover {
+    opacity: 1;
+}
+
+
 .left {
     text-align: left;
-    width: 22vh;
+    width: 21vh;
     display: inline-block;
 }
 
 .right {
     text-align: right;
-    width: 22vh;
+    width: 21vh;
     display: inline-block;
 }
 
 #footer {
-    position: absolute;
+    position: fixed;
     bottom: 3vh;
-    right: 5vh;
-}
-
-#close-button {
-    pointer-events: all;
-    user-select: all;
-}
-
-#close-button:hover {
-    opacity: 1.0;
+    width: 84vh;
 }
 
 #grid-button {
@@ -245,12 +236,26 @@ hr {
     opacity: 1.0;
 }
 
-/* 
-#confetti-canvas {
-    background-color: red;
-    width: 100%;
-    height: 100%;
-} */
+select {
+    text-align: right;
+    pointer-events: all;
+    width: 20vh;
+    color: white;
+    font-size: 1.4vh;
+    font-weight: bold;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    border-radius: 0.8vh;
+    border: 0.1vh solid white;
+    background-color: rgb(17, 17, 17);
+    ;
+}
+
+option {
+    text-align: right;
+    background-color: transparent;
+    color: white;
+}
 
 .particle {
     position: absolute;
