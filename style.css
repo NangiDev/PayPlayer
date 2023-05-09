@@ -245,6 +245,7 @@ select {
     font-weight: bold;
     padding-top: 0.5vh;
     padding-bottom: 0.5vh;
+    padding-right: 0.5vh;
     border-radius: 0.8vh;
     border: 0.1vh solid white;
     background-color: rgb(17, 17, 17);
@@ -252,6 +253,7 @@ select {
 }
 
 option {
+    direction: rtl;
     text-align: right;
     background-color: transparent;
     color: white;
