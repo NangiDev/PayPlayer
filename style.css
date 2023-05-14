@@ -42,6 +42,18 @@ body {
     text-align: center;
 }
 
+.fa-compass {
+    font-size: 3.9vh;
+}
+
+.fa-circle-play {
+    font-size: 3.9vh;
+}
+
+.fa-circle-stop {
+    font-size: 3.9vh;
+}
+
 .fa-music {
     margin-top: -12vh;
     font-size: 7vh;

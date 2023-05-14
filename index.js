@@ -119,9 +119,15 @@ function playALong(event) {
 
     if (shouldPlay) {
         playButton.textContent = "Stop";
+        // var icon = document.getElementsByClassName("fa-circle-play")[0];
+        // icon.classList.toggle("fa-circle-stop");
+        // icon.classList.toggle("fa-circle-play");
     }
     else {
         playButton.textContent = "Play";
+        // var icon = document.getElementsByClassName("fa-circle-stop")[0];
+        // icon.classList.toggle("fa-circle-stop");
+        // icon.classList.toggle("fa-circle-play");
     }
 
     functions = [];
