@@ -226,25 +226,6 @@ play.addEventListener('touchstart', function (event) {
 *   SONG LIST  *
 ****************/
 
-var githash = document.getElementById("githash");
-function getGitHash() {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var file = xhr.responseText.split('\n');
-            githash.textContent = "Git hash: " + file[0].slice(0, 8);
-        }
-    };
-    xhr.open('GET', 'dist/git-hash.txt');
-    xhr.send();
-}
-
-if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-    githash.textContent = "Local development";
-} else {
-    getGitHash();
-}
-
 var dropdown = document.getElementById("songs-dropdown");
 dropdown.addEventListener('change', function () {
     var selectedOption = dropdown.selectedOptions[0];
