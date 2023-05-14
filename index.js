@@ -226,33 +226,42 @@ play.addEventListener('touchstart', function (event) {
 *   SONG LIST  *
 ****************/
 
-window.onload = () => {
-    var dropdown = document.getElementById("songs-dropdown");
-
-    fetch("songs/")
-        .then(response => response.text())
-        .then(html => {
-            // Parse the returned HTML to extract the list of .txt files
-            var fileList = [];
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, "text/html");
-            var links = doc.querySelectorAll("a");
-            for (var i = 0; i < links.length; i++) {
-                var href = links[i].getAttribute("href");
-                if (href.includes(".txt")) {
-                    fileList.push(href);
-                }
-            }
-
-            // Create an option for each file in the dropdown menu
-            for (var i = 0; i < fileList.length; i++) {
-                var filename = fileList[i];
-                var option = document.createElement("option");
-                option.value = filename;
-                option.text = filename.split("/").pop().replace(".txt", "").replace(".preview", "").replaceAll("_", " ");
-                dropdown.add(option);
-            }
-        })
-        .catch(error => console.error(error));
-
+var githash = document.getElementById("githash");
+if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    githash.textContent = "Local development";
+} else {
+    const gitHash = process.env.GIT_COMMIT_SHA;
+    githash.textContent = `Git hash: ${gitHash}`;
 }
+
+var dropdown = document.getElementById("songs-dropdown");
+dropdown.addEventListener('change', function () {
+    var selectedOption = dropdown.selectedOptions[0];
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.open('GET', "songs/" + selectedOption.text + ".txt");
+    xhr.send();
+});
+
+// Make an AJAX request to retrieve the list of files
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        // Parse the list of file names from the response
+        var songIndex = xhr.responseText.split('\n');
+
+        // Populate the dropdown list with the file names
+        songIndex.forEach(function (songName) {
+            var option = document.createElement('option');
+            option.text = songName;
+            option.value = songName.txt;
+            dropdown.add(option);
+        });
+    }
+};
+xhr.open('GET', 'songs/_SongIndex.txt');
+xhr.send();
