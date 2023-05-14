@@ -275,7 +275,7 @@ function populateDropDown() {
             });
         }
     };
-    xhr.open('GET', 'songs/_SongIndex.txt');
+    xhr.open('GET', 'songs/Index.txt');
     xhr.send();
 }
 populateDropDown();
