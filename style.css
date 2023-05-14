@@ -266,6 +266,7 @@ option {
     background-color: white;
     animation: none;
     z-index: 4;
+    overflow: hidden;
 }
 
 @keyframes explode {
