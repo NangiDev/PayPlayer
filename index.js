@@ -116,6 +116,14 @@ function createNote(song, index, delay) {
 function playALong(event) {
     event.preventDefault();
     shouldPlay = !shouldPlay;
+
+    if (shouldPlay) {
+        playButton.textContent = "Stop";
+    }
+    else {
+        playButton.textContent = "Play";
+    }
+
     functions = [];
     if (shouldPlay) {
         var dropdown = document.getElementById("songs-dropdown");
@@ -169,8 +177,8 @@ setInterval(updateCurrentDate, 1000);
 *   CONFETTI   *
 ****************/
 
-const play = document.getElementById('play');
-const container = document.documentElement;
+//const container = document.documentElement;
+const container = document.getElementById('play');
 
 function createParticles(clientX, clientY) {
     for (let i = 0; i < 20 + Math.random() * 20; i++) {
@@ -186,13 +194,15 @@ function createParticles(clientX, clientY) {
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
 
-        particle.style.left = clientX + x + 'px';
-        particle.style.top = clientY + y + 'px';
+        const rect = container.getBoundingClientRect();
+
+        particle.style.left = clientX - rect.left + x + 'px';
+        particle.style.top = clientY - rect.top + y + 'px';
         particle.style.zIndex = '9999';
 
         const animation = particle.animate(
             [
-                { transform: 'translate(0, 0) scale(0) rotate(0deg)', opacity: 1 },
+                { transform: `translate(0, 0) scale(0) rotate(0deg)`, opacity: 1 },
                 { transform: `translate(${x}px, ${y}px) scale(${scale}) rotate(${rotation}deg)`, opacity: 0 }
             ],
             {
