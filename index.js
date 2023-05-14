@@ -227,11 +227,22 @@ play.addEventListener('touchstart', function (event) {
 ****************/
 
 var githash = document.getElementById("githash");
+function getGitHash() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var file = xhr.responseText.split('\n');
+            githash.textContent = "Git hash: " + file[0].slice(0, 8);
+        }
+    };
+    xhr.open('GET', 'dist/git-hash.txt');
+    xhr.send();
+}
+
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
     githash.textContent = "Local development";
 } else {
-    const gitHash = process.env.GIT_COMMIT_SHA;
-    githash.textContent = `Git hash: ${gitHash}`;
+    getGitHash();
 }
 
 var dropdown = document.getElementById("songs-dropdown");
@@ -247,21 +258,24 @@ dropdown.addEventListener('change', function () {
     xhr.send();
 });
 
-// Make an AJAX request to retrieve the list of files
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        // Parse the list of file names from the response
-        var songIndex = xhr.responseText.split('\n');
+function populateDropDown() {
+    // Make an AJAX request to retrieve the list of files
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Parse the list of file names from the response
+            var songIndex = xhr.responseText.split('\n');
 
-        // Populate the dropdown list with the file names
-        songIndex.forEach(function (songName) {
-            var option = document.createElement('option');
-            option.text = songName;
-            option.value = songName.txt;
-            dropdown.add(option);
-        });
-    }
-};
-xhr.open('GET', 'songs/_SongIndex.txt');
-xhr.send();
+            // Populate the dropdown list with the file names
+            songIndex.forEach(function (songName) {
+                var option = document.createElement('option');
+                option.text = songName;
+                option.value = songName.txt;
+                dropdown.add(option);
+            });
+        }
+    };
+    xhr.open('GET', 'songs/_SongIndex.txt');
+    xhr.send();
+}
+populateDropDown();
