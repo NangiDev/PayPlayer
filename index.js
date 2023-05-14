@@ -91,7 +91,7 @@ let functions = [];
 let shouldPlay = false;
 const playArea = document.getElementById("play").getBoundingClientRect();
 
-function createNote(song, index) {
+function createNote(song, index, delay) {
     return function () {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
@@ -108,7 +108,7 @@ function createNote(song, index) {
                 } else {
                     reject("Sequence cancelled");
                 }
-            }, 400);
+            }, parseInt(delay));
         });
     }
 }
@@ -116,12 +116,14 @@ function createNote(song, index) {
 function playALong(event) {
     event.preventDefault();
     shouldPlay = !shouldPlay;
+    functions = [];
     if (shouldPlay) {
         var dropdown = document.getElementById("songs-dropdown");
         var notes = getSongContents(dropdown.selectedOptions[0].text);
         var selectedSong = notes.split(",");
+        var delay = selectedSong.pop();
         selectedSong.map((song, index) => {
-            functions[index] = createNote(song, index)
+            functions[index] = createNote(song, index, delay);
         });
 
         functions.reduce(function (promiseChain, currentFunction) {
@@ -239,7 +241,7 @@ function getSongContents(songName) {
     xhr.open('GET', fileURL, false);
     xhr.send();
 
-    return fileContents;
+    return fileContents.replaceAll("\r\n", "");
 }
 
 function populateDropDown() {
