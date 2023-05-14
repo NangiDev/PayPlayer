@@ -89,7 +89,6 @@ playButton.addEventListener("touchstart", playALong/* , { once: true } */);
 
 let functions = [];
 let shouldPlay = false;
-const playArea = document.getElementById("play").getBoundingClientRect();
 
 function createNote(song, index, delay) {
     return function () {
@@ -97,13 +96,14 @@ function createNote(song, index, delay) {
             setTimeout(function () {
                 if (shouldPlay) {
                     if (song >= 0 & song < 9) {
+                        const playArea = document.getElementById("play").getBoundingClientRect();
                         playSoundByIndex(song);
                         createParticles(
                             playArea.x + (playArea.width / 6) + (playArea.width / 3) * (song % 3), //Particle X
                             playArea.y + (playArea.height / 6 + (playArea.height / 3) * Math.floor((song / 3))) //Particle Y
                         );
                     }
-                    if (index === functions.length - 1) { shouldPlay = false; }
+                    if (index === functions.length - 1) { toggleShouldPlay(); }
                     resolve();
                 } else {
                     reject("Sequence cancelled");
@@ -113,10 +113,8 @@ function createNote(song, index, delay) {
     }
 }
 
-function playALong(event) {
-    event.preventDefault();
+function toggleShouldPlay() {
     shouldPlay = !shouldPlay;
-
     if (shouldPlay) {
         playButton.textContent = "Stop";
         // var icon = document.getElementsByClassName("fa-circle-play")[0];
@@ -129,7 +127,11 @@ function playALong(event) {
         // icon.classList.toggle("fa-circle-stop");
         // icon.classList.toggle("fa-circle-play");
     }
+}
 
+function playALong(event) {
+    event.preventDefault();
+    toggleShouldPlay();
     functions = [];
     if (shouldPlay) {
         var dropdown = document.getElementById("songs-dropdown");
