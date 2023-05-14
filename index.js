@@ -226,30 +226,33 @@ play.addEventListener('touchstart', function (event) {
 *   SONG LIST  *
 ****************/
 
-var dropdown = document.getElementById("songs-dropdown");
+window.onload = () => {
+    var dropdown = document.getElementById("songs-dropdown");
 
-fetch("songs/")
-    .then(response => response.text())
-    .then(html => {
-        // Parse the returned HTML to extract the list of .txt files
-        var fileList = [];
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(html, "text/html");
-        var links = doc.querySelectorAll("a");
-        for (var i = 0; i < links.length; i++) {
-            var href = links[i].getAttribute("href");
-            if (href.includes(".txt")) {
-                fileList.push(href);
+    fetch("songs/")
+        .then(response => response.text())
+        .then(html => {
+            // Parse the returned HTML to extract the list of .txt files
+            var fileList = [];
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, "text/html");
+            var links = doc.querySelectorAll("a");
+            for (var i = 0; i < links.length; i++) {
+                var href = links[i].getAttribute("href");
+                if (href.includes(".txt")) {
+                    fileList.push(href);
+                }
             }
-        }
 
-        // Create an option for each file in the dropdown menu
-        for (var i = 0; i < fileList.length; i++) {
-            var filename = fileList[i];
-            var option = document.createElement("option");
-            option.value = filename;
-            option.text = filename.split("/").pop().replace(".txt", "").replace(".preview", "").replaceAll("_", " ");
-            dropdown.add(option);
-        }
-    })
-    .catch(error => console.error(error));
+            // Create an option for each file in the dropdown menu
+            for (var i = 0; i < fileList.length; i++) {
+                var filename = fileList[i];
+                var option = document.createElement("option");
+                option.value = filename;
+                option.text = filename.split("/").pop().replace(".txt", "").replace(".preview", "").replaceAll("_", " ");
+                dropdown.add(option);
+            }
+        })
+        .catch(error => console.error(error));
+
+}
