@@ -96,7 +96,7 @@ function createNote(song, index) {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
                 if (shouldPlay) {
-                    if (song >= 0) {
+                    if (song >= 0 & song < 9) {
                         playSoundByIndex(song);
                         createParticles(
                             playArea.x + (playArea.width / 6) + (playArea.width / 3) * (song % 3), //Particle X
@@ -117,21 +117,14 @@ function playALong(event) {
     event.preventDefault();
     shouldPlay = !shouldPlay;
     if (shouldPlay) {
-        let twinkleLittleStar =
-            [
-                0, 0, 1, 1, 2, 2, 1, -1,
-                7, 7, 4, 4, 6, 6, 0, -1,
-                1, 1, 7, 7, 4, 4, 6, -1,
-                1, 1, 7, 7, 4, 4, 6, -1,
-                0, 0, 1, 1, 2, 2, 1, -1,
-                7, 7, 4, 4, 6, 6, 0, -1
-            ]
-
-        twinkleLittleStar.map((song, index) => {
+        var dropdown = document.getElementById("songs-dropdown");
+        var notes = getSongContents(dropdown.selectedOptions[0].text);
+        var selectedSong = notes.split(",");
+        selectedSong.map((song, index) => {
             functions[index] = createNote(song, index)
         });
 
-        functions.reduce(function (promiseChain, currentFunction, index) {
+        functions.reduce(function (promiseChain, currentFunction) {
             return promiseChain.then(currentFunction);
         }, Promise.resolve())
             .catch(function (error) {
@@ -227,17 +220,27 @@ play.addEventListener('touchstart', function (event) {
 ****************/
 
 var dropdown = document.getElementById("songs-dropdown");
-dropdown.addEventListener('change', function () {
-    var selectedOption = dropdown.selectedOptions[0];
-    var xhr = new XMLHttpRequest();
+
+function getSongContents(songName) {
+    const xhr = new XMLHttpRequest();
+    const fileURL = `songs/${songName}.txt`;
+    let fileContents = '';
+
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                fileContents = xhr.responseText;
+            } else {
+                console.log('Error reading file:', xhr.status);
+            }
         }
     };
-    xhr.open('GET', "songs/" + selectedOption.text + ".txt");
+
+    xhr.open('GET', fileURL, false);
     xhr.send();
-});
+
+    return fileContents;
+}
 
 function populateDropDown() {
     // Make an AJAX request to retrieve the list of files
@@ -251,7 +254,6 @@ function populateDropDown() {
             songIndex.forEach(function (songName) {
                 var option = document.createElement('option');
                 option.text = songName;
-                option.value = songName.txt;
                 dropdown.add(option);
             });
         }
