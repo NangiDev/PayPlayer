@@ -66,8 +66,14 @@ Array.prototype.forEach.call(squares, function (square, index) {
 let startTime = 0;
 let endTime = 0;
 let timeElapsed = 0;
+
+let playerPressedButtonIndex = -1;
 function playSound(event) {
     event.preventDefault();
+
+    if (shouldMimic) {
+        playerPressedButtonIndex = event.currentTarget.soundIndex;
+    } else { playerPressedButtonIndex = -1; }
 
     startTime = performance.now();
     playSoundByIndex(event.currentTarget.soundIndex);
@@ -113,9 +119,12 @@ function createNote(song, index, delay) {
     }
 }
 
-function toggleShouldPlay() {
+function toggleShouldPlay(forceState) {
     shouldPlay = !shouldPlay;
+    if (forceState != undefined) { shouldPlay = forceState; }
+
     if (shouldPlay) {
+        toggleShouldMimic(false);
         playButton.textContent = "Stop";
         // var icon = document.getElementsByClassName("fa-circle-play")[0];
         // icon.classList.toggle("fa-circle-stop");
@@ -135,7 +144,7 @@ function playALong(event) {
     functions = [];
     if (shouldPlay) {
         var dropdown = document.getElementById("songs-dropdown");
-        var notes = getSongContents(dropdown.selectedOptions[0].text);
+        var notes = getSongContents(dropdown.selectedOptions[0].value);
         var selectedSong = notes.split(",");
         var delay = selectedSong.pop();
         selectedSong.map((song, index) => {
@@ -148,6 +157,42 @@ function playALong(event) {
             .catch(function (error) {
                 console.log("Error:", error);
             });
+    }
+}
+
+
+/***************
+*    MIMIC     *
+****************/
+
+var mimicButton = document.getElementById("mimic-song");
+mimicButton.addEventListener("mousedown", mimicSong);
+mimicButton.addEventListener("touchstart", mimicSong/* , { once: true } */);
+
+let shouldMimic = false;
+
+function toggleShouldMimic(forceState) {
+    shouldMimic = !shouldMimic;
+    if (forceState != undefined) { shouldMimic = forceState; }
+    if (shouldMimic) {
+        toggleShouldPlay(false);
+        mimicButton.textContent = "Stop";
+    }
+    else {
+        mimicButton.textContent = "Mimic";
+    }
+}
+
+function mimicSong(event) {
+    event.preventDefault();
+    toggleShouldMimic();
+
+    functions = [];
+    if (shouldMimic) {
+        var dropdown = document.getElementById("songs-dropdown");
+        var notes = getSongContents(dropdown.selectedOptions[0].text);
+        var selectedSong = notes.split(",");
+        var delay = selectedSong.pop();
     }
 }
 
@@ -273,7 +318,8 @@ function populateDropDown() {
             // Populate the dropdown list with the file names
             songIndex.forEach(function (songName) {
                 var option = document.createElement('option');
-                option.text = songName;
+                option.value = songName;
+                option.text = songName.replaceAll("_", " ");
                 dropdown.add(option);
             });
         }
