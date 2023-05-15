@@ -17,12 +17,11 @@ End product will not be as similar to the Swish app. I don't want it to be used 
 * Create pull request
 
 ## Note sheet
-+---+---+---+
 | 0 | 1 | 2 |
-+---+---+---+
+| - | - | - |
 | 3 | 4 | 5 |
-+---+---+---+
 | 6 | 7 | 8 |
-+---+---+---+
+
 -1 = Paus
-last number in array is the delay in milliseconds for when to play next note.
+
+Last number in array is the delay in milliseconds for when to play next note.
