@@ -305,7 +305,7 @@ function getSongContents(songName) {
     xhr.open('GET', fileURL, false);
     xhr.send();
 
-    return fileContents.replaceAll("\r\n", "");
+    return fileContents.replaceAll("\r\n", "").replaceAll("\n", "");
 }
 
 function populateDropDown() {
