@@ -147,6 +147,7 @@ function playALong(event) {
         var notes = getSongContents(dropdown.selectedOptions[0].value);
         var selectedSong = notes.split(",");
         var delay = selectedSong.pop();
+        console.log(selectedSong);
         selectedSong.map((song, index) => {
             functions[index] = createNote(song, index, delay);
         });
