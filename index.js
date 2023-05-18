@@ -6,6 +6,19 @@ var gridButton = document.getElementById("grid-button");
 gridButton.addEventListener("mousedown", toggleGrid);
 gridButton.addEventListener("touchstart", toggleGrid/* , { once: true } */);
 
+document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+var shouldBubble = true;
+function handleVisibilityChange() {
+    if (document.hidden) {
+        toggleShouldMimic(false);
+        toggleShouldPlay(false);
+        shouldBubble = false;
+    } else {
+        shouldBubble = true;
+    }
+}
+
 function toggleGrid(event) {
     event.preventDefault();
     squares = document.getElementsByClassName("square-no-border");
@@ -262,14 +275,17 @@ updateCurrentDate()
 setInterval(updateCurrentDate, 1000);
 
 /***************
-*   CONFETTI   *
+*   EXPLOSION  *
 ****************/
 
 //const container = document.documentElement;
 const container = document.getElementById('play');
+const maxParticleCount = 100;
 
 function createParticles(clientX, clientY) {
-    for (let i = 0; i < 20 + Math.random() * 20; i++) {
+    var childrenCount = container.children.length;
+    if (childrenCount >= maxParticleCount) { return; }
+    for (let i = 0; i < 20 + Math.random(); i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         container.appendChild(particle);
@@ -363,3 +379,44 @@ function populateDropDown() {
     xhr.send();
 }
 populateDropDown();
+
+
+/***************
+*    BUBBLES   *
+****************/
+
+const rect = container.getBoundingClientRect();
+function createBubble() {
+    var childrenCount = container.children.length;
+    if (childrenCount >= maxParticleCount - 25) { return; }
+    for (let i = 0; i < 4; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('bubble');
+        container.appendChild(particle);
+
+        const scale = Math.random() * 1.5;
+        const duration = 5000 + Math.random() * 500;
+        const x = rect.width * Math.random();
+        const y = -rect.height / 4 * Math.random() + 100 * Math.random();
+
+        particle.style.left = rect.left + x;
+        particle.style.top = rect.top + y;
+        particle.style.zIndex = '9990';
+
+        const animation = particle.animate(
+            [
+                { transform: `translate(${x}px, ${rect.height}px) scale(0.1)`, opacity: 0.6 },
+                { transform: `translate(${x}px, ${y}px) scale(${scale})`, opacity: 0 }
+            ],
+            {
+                duration: duration,
+                easing: 'ease-out'
+            }
+        );
+
+        animation.onfinish = () => particle.remove();
+    }
+}
+if (shouldBubble) {
+    setInterval(createBubble, 500);
+}
