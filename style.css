@@ -228,6 +228,11 @@ hr {
     font-size: 1.6vh;
 }
 
+#output {
+    opacity: 0.6;
+    font-size: 2vh;
+}
+
 .horizontal-text {
     margin-top: 1vh;
     position: relative;

@@ -103,7 +103,7 @@ function playSound(event) {
 
     // update the output element with the time elapsed
     var outputElement = document.getElementById('output');
-    outputElement.textContent = `Delay on sound: ${timeElapsed.toFixed(3)} ms`;
+    outputElement.textContent = `Sound delay: ${timeElapsed.toFixed(3)} ms`;
 }
 
 /***************
