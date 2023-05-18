@@ -137,12 +137,11 @@ body {
 
 .square h6 {
     height: 100%;
-    line-height: 300%;
+    line-height: 14vh;
     width: 100%;
-    vertical-align: bottom;
     text-align: center;
-    font-size: 5vh;
-    font-weight: 100;
+    font-size: 6vh;
+    font-weight: bold;
     overflow: hidden;
 }
 
@@ -160,7 +159,8 @@ body {
 }
 
 .square-border {
-    border: dashed purple;
+    border: dashed white;
+    opacity: 0.7;
     border-width: 0.2vh;
 }
 
@@ -175,7 +175,6 @@ body {
     text-align: center;
     padding-top: 20px;
 }
-
 
 hr {
     color: transparent;
