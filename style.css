@@ -9,6 +9,11 @@
     user-select: none;
 }
 
+a {
+    pointer-events: all;
+    user-select: all;
+}
+
 html {
     height: 100vh;
 }
