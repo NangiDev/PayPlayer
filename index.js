@@ -9,6 +9,14 @@ gridButton.addEventListener("touchstart", toggleGrid/* , { once: true } */);
 function toggleGrid(event) {
     event.preventDefault();
     squares = document.getElementsByClassName("square-no-border");
+    sweet = document.getElementById("sweet");
+
+    if (sweet.style.opacity == "" || sweet.style.opacity > 0) {
+        sweet.style.opacity = 0;
+    } else {
+        sweet.style.opacity = 1;
+    }
+
     Array.prototype.forEach.call(squares, function (square) {
         square.classList.toggle("square-border");
     });
@@ -96,7 +104,7 @@ playButton.addEventListener("touchstart", playALong/* , { once: true } */);
 let functions = [];
 let shouldPlay = false;
 
-function createNote(song, index, delay) {
+function createNoteForPlay(song, index, delay) {
     return function () {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
@@ -148,7 +156,7 @@ function playALong(event) {
         var selectedSong = notes.split(",");
         var delay = selectedSong.pop();
         selectedSong.map((song, index) => {
-            functions[index] = createNote(song, index, delay);
+            functions[index] = createNoteForPlay(song, index, delay);
         });
 
         functions.reduce(function (promiseChain, currentFunction) {
@@ -171,6 +179,26 @@ mimicButton.addEventListener("touchstart", mimicSong/* , { once: true } */);
 
 let shouldMimic = false;
 
+function createNoteForMimic(song, index, delay) {
+    return () => {
+        return setTimeout(function () {
+            if (shouldMimic) {
+                if (song >= 0 & song < 9) {
+                    const playArea = document.getElementById("play").getBoundingClientRect();
+                    playSoundByIndex(song);
+                    createParticles(
+                        playArea.x + (playArea.width / 6) + (playArea.width / 3) * (song % 3), //Particle X
+                        playArea.y + (playArea.height / 6 + (playArea.height / 3) * Math.floor((song / 3))) //Particle Y
+                    );
+                }
+                if (index === functions.length - 1) { toggleShouldMimic(); }
+            } else {
+                console.log("Info: Mimic ended");
+            }
+        }, parseInt(delay));
+    }
+}
+
 function toggleShouldMimic(forceState) {
     shouldMimic = !shouldMimic;
     if (forceState != undefined) { shouldMimic = forceState; }
@@ -183,16 +211,23 @@ function toggleShouldMimic(forceState) {
     }
 }
 
+var playedNotes = 0;
+var mimicedNotes = [];
+
 function mimicSong(event) {
     event.preventDefault();
     toggleShouldMimic();
-
+    playedNotes = 0;
+    mimicedNotes = [];
     functions = [];
     if (shouldMimic) {
         var dropdown = document.getElementById("songs-dropdown");
-        var notes = getSongContents(dropdown.selectedOptions[0].text);
+        var notes = getSongContents(dropdown.selectedOptions[0].value);
         var selectedSong = notes.split(",");
         var delay = selectedSong.pop();
+        selectedSong.map((song, index) => {
+            functions[index] = createNoteForMimic(song, index, delay);
+        });
     }
 }
 
