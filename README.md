@@ -17,10 +17,10 @@ End product will not be as similar to the Swish app. I don't want it to be used 
 * Create pull request
 
 ## Note sheet
-| 0 | 1 | 2 |
-| - | - | - |
-| 3 | 4 | 5 |
-| 6 | 7 | 8 |
+| 0 | 1 | 2 |     | C | G | A |
+| - | - | - |  -  | - | - | - |
+| 3 | 4 | 5 | <-> | B | E | H |
+| 6 | 7 | 8 |     | D | F | C |
 
 -1 = Paus
 
