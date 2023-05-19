@@ -368,6 +368,7 @@ function populateDropDown() {
 
             // Populate the dropdown list with the file names
             songIndex.forEach(function (songName) {
+                if (songName === "") { return; }
                 var option = document.createElement('option');
                 option.value = songName;
                 option.text = songName.replaceAll("_", " ");
