@@ -446,6 +446,7 @@ function handleMotion(event) {
     // Apply rotation to your target div element
     var targetDiv = document.getElementById("crown");
     targetDiv.style.transform = "rotate(" + currentAngle + "deg)";
+    container.style.setProperty('--background', `linear-gradient(${150 + angle}deg, rgba(255, 249, 188, 1) 5%, rgba(227, 176, 39, 1) 35%, rgb(146, 66, 12) 80%)`);
 }
 
 function lerp(start, end, t) {

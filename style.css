@@ -151,7 +151,8 @@ body {
     background: rgb(172, 110, 184);
     background: linear-gradient(155deg, rgb(101, 54, 161) 54%, rgba(17, 8, 89, 1) 80%);
     background: rgb(255, 249, 188);
-    background: linear-gradient(165deg, rgba(255, 249, 188, 1) 5%, rgba(227, 176, 39, 1) 35%, rgb(146, 66, 12) 80%);
+    background: linear-gradient(150deg, rgba(255, 249, 188, 1) 5%, rgba(227, 176, 39, 1) 35%, rgb(146, 66, 12) 80%);
+    background: var(--background, linear-gradient(150deg, rgba(255, 249, 188, 1) 5%, rgba(227, 176, 39, 1) 35%, rgb(146, 66, 12) 80%));
     border-radius: 50%;
 }
 
@@ -317,7 +318,6 @@ select {
     border-radius: 0.8vh;
     border: 0.1vh solid white;
     background-color: rgb(17, 17, 17);
-    ;
 }
 
 option {
