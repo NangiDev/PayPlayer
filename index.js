@@ -386,6 +386,7 @@ populateDropDown();
 ****************/
 
 const rect = container.getBoundingClientRect();
+var angle = 0;
 function createBubble() {
     var childrenCount = container.children.length;
     if (childrenCount >= maxParticleCount - 25) { return; }
@@ -406,7 +407,7 @@ function createBubble() {
         const animation = particle.animate(
             [
                 { transform: `translate(${x}px, ${rect.height}px) scale(0.1)`, opacity: 0.6 },
-                { transform: `translate(${x}px, ${y}px) scale(${scale})`, opacity: 0 }
+                { transform: `translate(${x + angle * 10}px, ${y}px) scale(${scale})`, opacity: 0 }
             ],
             {
                 duration: duration,
@@ -419,4 +420,34 @@ function createBubble() {
 }
 if (shouldBubble) {
     setInterval(createBubble, 500);
+}
+
+window.addEventListener("devicemotion", handleMotion, true);
+
+var currentAngle = 0;
+var smoothingFactor = 0.01;
+
+function handleMotion(event) {
+    var acceleration = event.accelerationIncludingGravity;
+    var x = acceleration.x;
+    var y = acceleration.y;
+
+    var targetAngle = Math.atan2(x, y) * (180 / Math.PI);
+    currentAngle = lerp(currentAngle, targetAngle, smoothingFactor);
+
+    if (currentAngle < -10) {
+        currentAngle = -10;
+    } else if (currentAngle > 10) {
+        currentAngle = 10;
+    }
+
+    angle = currentAngle;
+
+    // Apply rotation to your target div element
+    var targetDiv = document.getElementById("crown");
+    targetDiv.style.transform = "rotate(" + currentAngle + "deg)";
+}
+
+function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
 }
